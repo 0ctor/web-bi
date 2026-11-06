@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 
 const pageMeta: Metadata = {
-    title: 'Octor',
-    description: 'Plataforma Octor',
+    title: 'Painel da clínica',
+    description: 'Respostas prontas sobre a clínica, sem montar gráfico.',
     icons: {
         icon: [
             { url: '/favicon.ico', sizes: 'any' },

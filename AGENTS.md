@@ -1,15 +1,28 @@
-# AGENTS.md — `template-frontend`
+# AGENTS.md — `web-bi`
 
-Template canônico de frontend Octor (Next.js Ecme). Org [`0ctor`](https://github.com/0ctor).
+Painel de perguntas prontas para clínicas e consultórios. Org [`0ctor`](https://github.com/0ctor).
 
 ## Este componente
 
 | Campo | Valor |
 |-------|--------|
-| Papel | Golden path FE para `web-*` / shells Next |
-| Stack | Next.js App Router + TypeScript + Tailwind (Ecme) |
-| Auth produto | SSO [`web-auth`](https://github.com/0ctor/web-auth) (`auth.octor.com.br`) |
-| Deploy | `platform-deploy-hook` · imagem `ghcr.io/0ctor/<app>:<sha>` |
+| Domínio | `clinico` |
+| Sistema | `bi` |
+| Papel | leitura para o dono da clínica, em perguntas fechadas |
+| Stack | Next.js App Router + TypeScript + Tailwind (Ecme, a partir de `template-frontend`) |
+| Auth | SSO [`web-auth`](https://github.com/0ctor/web-auth) (`auth.octor.com.br`), `NEXT_PUBLIC_APP_ID=bi` |
+| Dado | agregado; agenda e financeiro continuam donos. Sem ficha de paciente neste app |
+| Host pretendido | `bi.octor.com.br` — ainda sem PaaS, DNS e allowlist |
+| Deploy | `platform-deploy-hook` · imagem `ghcr.io/0ctor/web-bi:<sha>` · só depois do registro |
+
+Produto: [docs/produto.md](./docs/produto.md).
+
+## Regras deste produto
+
+1. A tela não calcula total, preço nem lista de pacientes. Quando o número existir, a API dona envia o agregado.
+2. Resposta aceita: rótulo + contagem, ou `sem_fonte`. Nome, telefone, CPF, e-mail e observação invalidam o payload.
+3. Sem exportar o movimento da clínica para ferramenta externa de análise.
+4. Sem construtor de gráfico. Pergunta nova entra no catálogo fechado, com teste.
 
 ## Padrões da org (obrigatórios)
 
@@ -54,13 +67,9 @@ Template canônico de frontend Octor (Next.js Ecme). Org [`0ctor`](https://githu
 11. **Marca:** primary `#0CAF60` (não o azul Ecme `#2a85ff`). `themeSchema: 'default'`. CSS `--primary*` iguais. Gate: `preset-theme-schema.config.test.ts`.
 12. **Header do usuário:** `useCurrentSession` lê `octorAuthStore` (SSO). Não deixar o dropdown no NextAuth vazio (“Anonymous”).
 
-## Novo app a partir daqui
-
-Siga [docs/NOVO_APP.md](./docs/NOVO_APP.md). Snippet PaaS: [docs/apps.json.example](./docs/apps.json.example).
-
 ## Como o agente deve trabalhar
 
-1. Mudanças pequenas e alinhadas ao padrão Octor (não reinventar auth).
-2. Após clonar o template num app novo: renomear serviço, host, `OCTOR_SERVICE_NAME`, registrar no host + catálogo.
-3. Compose/env de produção no bare metal: repo ops `sp1-sd-octor-1` (`apps/<app>/`), não só este código.
-4. Vite apps de produto (agenda/estoque): referência `web-stock` (`VITE_*`); este template é a linha **Next/Ecme**.
+1. Mudanças pequenas. Auth continua o do template (`web-auth`).
+2. Pergunta nova: catálogo em `src/domain/perguntas.ts`, frase em português e teste. Sem número inventado na tela.
+3. Compose de produção no bare metal (`sp1-sd-octor-1`, `apps/web-bi/`) só no primeiro deploy, com registro no host. Snippet: [docs/apps.json.example](./docs/apps.json.example).
+4. Origem do shell: [docs/NOVO_APP.md](./docs/NOVO_APP.md).

@@ -1,3 +1,8 @@
+# Origem do shell
+
+Este repositório já é o `web-bi`. O texto abaixo é o checklist do
+`template-frontend`, de onde o shell foi copiado.
+
 # Novo app a partir deste template
 
 Golden path Octor para frontend Next.js (Ecme). Deploy via `platform-deploy-hook`.
