@@ -1,44 +1,36 @@
-# template-frontend — Template Frontend App Octor
+# web-bi — Painel da clínica
 
-Template canônico de **frontend Next.js (Ecme)** para apps `0ctor/web-*`.
+Respostas prontas para quem cuida da clínica ou do consultório. A tela fala em
+português: idade que mais aparece, bairro, como a pessoa chegou, faltas,
+horário cheio, atendimento mais procurado, pacientes novos e o que entrou no
+mês. Não há construtor de gráfico.
 
-Use este repositório via **GitHub Template** → novo app → ajuste env/nome → registre no `platform-deploy-hook` (ver [docs/NOVO_APP.md](./docs/NOVO_APP.md)).
+O recorte vem de relatórios prontos de consultório (Jane, Cliniko,
+SimplePractice, iClinic, Feegow, Shosp). A conta fica dentro da Octor. Detalhe
+em [docs/produto.md](./docs/produto.md).
 
-## O que já vem pronto
+| Campo | Valor |
+|-------|--------|
+| Repositório | [`0ctor/web-bi`](https://github.com/0ctor/web-bi) |
+| AppMenu | `bi` (`NEXT_PUBLIC_APP_ID`) |
+| Host pretendido | `bi.octor.com.br` — ainda sem registro no PaaS nem no web-auth |
+| Auth | SSO [web-auth](https://github.com/0ctor/web-auth) |
+| Dado | agregado da agenda e do financeiro; este app não guarda ficha |
+
+Nesta versão as cartas dizem que a agenda ou o financeiro ainda não enviaram o
+resumo. Não há número de exemplo.
+
+## O que já vem do template
 
 | Peça | Detalhe |
 |------|---------|
-| **SSO web-auth** | `NEXT_PUBLIC_AUTH_*` → redirect ao portal; `/auth/callback`; `AuthRouteGuard` |
-| **Account + gate** | `GET /v1/account` + `resolveAppAccess` (`NEXT_PUBLIC_APP_ID`) |
-| **AppMenu** | Header com `user.apps` + handoff SSO entre apps |
-| **Session guard** | Não desloga em 401 genérico (`authSessionGuard`) |
-| **Health** | `/api/health/live` + `/api/health/ready` |
-| **Loki** | FE → `POST /api/errors/report` (BFF) → API; sem senha no browser |
-| **Docker** | `output: 'standalone'` + `Dockerfile` multi-stage |
-| **CI** | lint · tsc · vitest · build |
-| **Deploy** | `docs/apps.json.example` + `docker-compose.example.yml` |
+| SSO | `NEXT_PUBLIC_AUTH_*` → portal; `/auth/callback` |
+| Acesso | `GET /v1/account` + `resolveAppAccess` (`NEXT_PUBLIC_APP_ID=bi`) |
+| Health | `/api/health/live` + `/api/health/ready` |
+| Loki | `POST /api/errors/report` sem senha no browser |
+| CI | lint · tsc · vitest · build |
 
-NextAuth (Google/GitHub/credentials) fica só para **scaffold local** com `NEXT_PUBLIC_CENTRAL_AUTH_ENABLED=false`. Em produção o caminho é SSO.
-
-## Setup rápido
-
-**Com VPN + Vault (padrão do time):**
-
-```bash
-make env       # baixa .env de apps/<repo>/dev
-make install
-make dev       # npm run dev
-```
-
-| Make | Função |
-|------|--------|
-| `make env` / `env-push` / `env-diff` | Sync com Vault OPS (`10.8.0.9:8200`) |
-| `make dev` | Secrets + hot reload |
-| `make up` | Secrets + docker compose |
-
-Docs: [desenvolvimento-local](https://backstage.octor.com.br/desenvolvimento-local).
-
-**Sem vault (scaffold offline):**
+## Local
 
 ```bash
 cp .env.example .env
@@ -46,39 +38,13 @@ npm install
 npm run dev
 ```
 
-App em `http://localhost:3000`.
+App em `http://localhost:3000`. Com VPN e Vault, `make env` e `make dev`.
 
-Produção / SSO ligado: preencha `NEXT_PUBLIC_AUTH_PORTAL_URL` e `NEXT_PUBLIC_AUTH_API_URL` (defaults de `.env.example` já apontam para `auth.octor.com.br`).
+Scaffold sem portal: `NEXT_PUBLIC_CENTRAL_AUTH_ENABLED=false` no `.env`.
 
-Scaffold sem portal:
+## Deploy
 
-```bash
-# em .env
-NEXT_PUBLIC_CENTRAL_AUTH_ENABLED=false
-```
-
-## Scripts
-
-| Comando | Descrição |
-|---------|-----------|
-| `npm run dev` | Dev server (Turbopack) |
-| `npm run build` | Build de produção |
-| `npm start` | Serve o build |
-| `npm run lint` | ESLint |
-| `npm run prettier` | Checagem Prettier |
-
-## Deploy (resumo)
-
-1. Template → repo `0ctor/web-<nome>` (`dev` / `main`)
-2. Host: compose + `.env` + entrada em `apps.json` (PaaS)
-3. Merge `dev` → `main` → `platform-deploy-hook` deploya
-
-Detalhe: [docs/NOVO_APP.md](./docs/NOVO_APP.md) · agentes: [AGENTS.md](./AGENTS.md)
-
----
-
-UI base: **Ecme** (Next.js + TypeScript + Tailwind). Demo original: [ecme-react.themenate.net](https://ecme-react.themenate.net/).
-
-## Testes missão-crítica
-
-Padrão obrigatório FE/API (CI fail-closed em `dev` e `main`): [docs/TESTES_MISSAO_CRITICA.md](./docs/TESTES_MISSAO_CRITICA.md).
+Ainda não sobe. O snippet de compose e de `apps.json` está em
+`docker-compose.example.yml` e `docs/apps.json.example`. Registro no host,
+DNS, Statuspage, allowlist do web-auth e catálogo ficam para o primeiro
+deploy — só a partir de `main`, pelo platform-deploy-hook.

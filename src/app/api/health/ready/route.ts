@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
 
-const SERVICE = process.env.OCTOR_SERVICE_NAME || 'template-frontend'
+const SERVICE = process.env.OCTOR_SERVICE_NAME || 'web-bi'
 
 /**
- * Readiness — neste template FE-only sempre ok.
- * Em app dual, preferir health na API e Traefik PathPrefix(/health) nela.
+ * Readiness — o painel não tem banco próprio.
+ * Agregado da agenda e do financeiro entra depois, sem derrubar esta rota.
  */
 export async function GET() {
   return NextResponse.json(

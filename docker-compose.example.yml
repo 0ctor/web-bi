@@ -1,19 +1,18 @@
-# Exemplo de compose no host sp1 (`/home/ubuntu/octor/apps/<app>/`).
-# Ajuste nomes, host Traefik e IMAGE. Dual FE+API: ver web-services / web-compliance.
+# Exemplo de compose no host sp1 (`/home/ubuntu/octor/apps/web-bi/`).
+# Ainda não registrado. Host pretendido: bi.octor.com.br
 #
-# name: web-foo
+# name: web-bi
 services:
   web:
-    image: ${IMAGE:-ghcr.io/0ctor/template-frontend:latest}
-    container_name: octor-template-frontend
+    image: ${IMAGE:-ghcr.io/0ctor/web-bi:latest}
+    container_name: octor-web-bi
     restart: unless-stopped
     environment:
       TZ: America/Sao_Paulo
-      OCTOR_SERVICE_NAME: template-frontend
-      # BUSINESS_API_INTERNAL_URL: http://octor-web-foo-api:PORT
+      OCTOR_SERVICE_NAME: web-bi
       AUTH_SECRET: ${AUTH_SECRET:?}
       AUTH_TRUST_HOST: "true"
-      NEXTAUTH_URL: https://foo.octor.com.br
+      NEXTAUTH_URL: https://bi.octor.com.br
     networks:
       - proxy
       - octor
@@ -30,11 +29,11 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=proxy
-      - traefik.http.routers.template-frontend.rule=Host(`foo.octor.com.br`)
-      - traefik.http.routers.template-frontend.entrypoints=websecure
-      - traefik.http.routers.template-frontend.tls.certresolver=letsencrypt
-      - traefik.http.routers.template-frontend.priority=10
-      - traefik.http.services.template-frontend.loadbalancer.server.port=3000
+      - traefik.http.routers.web-bi.rule=Host(`bi.octor.com.br`)
+      - traefik.http.routers.web-bi.entrypoints=websecure
+      - traefik.http.routers.web-bi.tls.certresolver=letsencrypt
+      - traefik.http.routers.web-bi.priority=10
+      - traefik.http.services.web-bi.loadbalancer.server.port=3000
     logging:
       driver: json-file
       options:

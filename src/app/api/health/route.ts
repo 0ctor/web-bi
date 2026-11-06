@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-const SERVICE = process.env.OCTOR_SERVICE_NAME || 'template-frontend'
+const SERVICE = process.env.OCTOR_SERVICE_NAME || 'web-bi'
 
 /** Alias legado → live. Preferir /api/health/live e /api/health/ready. */
 export async function GET() {

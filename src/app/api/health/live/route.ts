@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-const SERVICE = process.env.OCTOR_SERVICE_NAME || 'template-frontend'
+const SERVICE = process.env.OCTOR_SERVICE_NAME || 'web-bi'
 
 /** Liveness — processo up; sem MySQL/Redis/I/O externo. */
 export async function GET() {

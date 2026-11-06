@@ -2,7 +2,7 @@
   "schema_version": 1,
   "diagram_type": "architecture",
   "meta": {
-    "title": "template-frontend",
+    "title": "web-bi",
     "quality_profile": "showcase",
     "viewBox": [
       1080,
@@ -20,10 +20,10 @@
       }
     ],
     "repository": {
-      "url": "https://github.com/0ctor/template-frontend",
+      "url": "https://github.com/0ctor/web-bi",
       "provider": "github",
       "link_mode": "web",
-      "revision": "1a2bf12baa2c4e9a8437f005198224843b4f184b"
+      "revision": "8fd468dc4f18f5beefd693583f8f0b0177bb615b"
     }
   },
   "components": [
@@ -44,7 +44,7 @@
     {
       "id": "web",
       "type": "frontend",
-      "label": "template-frontend",
+      "label": "web-bi",
       "sublabel": "Next.js",
       "pos": [
         276,

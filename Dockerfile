@@ -1,4 +1,4 @@
-# template-frontend — Next.js Ecme standalone (padrão Octor frontend)
+# web-bi — Next.js Ecme standalone (padrão Octor frontend)
 # Build args NEXT_PUBLIC_* entram no bundle em build time (como VITE_*).
 
 FROM node:22-alpine AS deps
@@ -15,7 +15,7 @@ ARG NEXT_PUBLIC_APP_URL=http://localhost:3000
 ARG NEXT_PUBLIC_API_URL=
 ARG NEXT_PUBLIC_AUTH_API_URL=https://auth.octor.com.br/v1
 ARG NEXT_PUBLIC_AUTH_PORTAL_URL=https://auth.octor.com.br
-ARG NEXT_PUBLIC_APP_ID=
+ARG NEXT_PUBLIC_APP_ID=bi
 ARG NEXT_PUBLIC_APP_MENU_ENV=production
 ARG NEXT_PUBLIC_CENTRAL_AUTH_ENABLED=true
 
