@@ -1,0 +1,22 @@
+---
+description: Pirâmide de testes missão-crítica Octor (FE + API)
+alwaysApply: true
+---
+
+# Testes missão-crítica — padrão do template
+
+Toda app nascida deste template (e qualquer app Octor) trata produção como
+**fail-closed**. Detalhe: `docs/TESTES_MISSAO_CRITICA.md`.
+
+## Obrigatório no CI (dev e main)
+
+- FE: lint + typecheck + Vitest (unit + regressão + contratos) + build/smoke
+- API: `cargo fmt --check` + `clippy -D warnings` + `cargo test --all-targets`
+- Push `main` **não** publica imagem sem quality verde
+- P0: correção + `*.regression.test.*` + gate que teria pegado o bug
+
+## Proibido
+
+- Merge/deploy com teste vermelho, skipado ou ausente para a classe do bug
+- Declarar pronto só com HTTP 200 / build OK
+- Soft-delete / auth / health sem teste de contrato

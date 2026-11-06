@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "template-frontend",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1080,
+      520
+    ],
+    "views": [
+      {
+        "id": "caminho",
+        "label": "Caminho principal",
+        "focus": [
+          "cliente",
+          "web"
+        ],
+        "note": "Módulos ligados pelo código deste repositório."
+      }
+    ],
+    "repository": {
+      "url": "https://github.com/0ctor/template-frontend",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "1a2bf12baa2c4e9a8437f005198224843b4f184b"
+    }
+  },
+  "components": [
+    {
+      "id": "cliente",
+      "type": "external",
+      "label": "Cliente",
+      "sublabel": "navegador",
+      "pos": [
+        40,
+        150
+      ],
+      "size": [
+        176,
+        72
+      ]
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "template-frontend",
+      "sublabel": "Next.js",
+      "pos": [
+        276,
+        150
+      ],
+      "size": [
+        188,
+        84
+      ],
+      "sources": [
+        {
+          "path": "package.json",
+          "line": 1,
+          "label": "Next.js"
+        }
+      ]
+    },
+    {
+      "id": "auth",
+      "type": "security",
+      "label": "Auth",
+      "sublabel": "autenticação",
+      "pos": [
+        276.0,
+        320
+      ],
+      "size": [
+        176,
+        68
+      ],
+      "sources": [
+        {
+          "path": "src/auth.ts",
+          "line": 1,
+          "label": "auth"
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "cliente-web-https",
+      "from": "cliente",
+      "to": "web",
+      "label": "HTTPS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "web-auth-auth",
+      "from": "web",
+      "to": "auth",
+      "label": "auth",
+      "variant": "security",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelDy": 28
+    }
+  ]
+}
